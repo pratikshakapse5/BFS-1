@@ -1,8 +1,3 @@
-//implemented BFS for level order traversal
-//TIme : O(N)
-//Space: O(N)
-
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -16,35 +11,31 @@
  */
 class Solution {
 public:
-    vector<vector<int>> res;
-    vector<int> temp;
-        
     vector<vector<int>> levelOrder(TreeNode* root) {
         if(root==nullptr)
-            return res;
-        bfs(root);
-        return res;
-    }
-    void bfs(TreeNode* root)
-    {
-        queue<TreeNode*>q;
+            return {};
+
+        vector<vector<int>> ans;
+       
+        queue<TreeNode*> q;
         q.push(root);
-        
+        TreeNode* front;
         while(!q.empty())
-        {
-            int len=q.size();
-            for(int i=0;i<len;i++)
+        {   
+             vector<int> temp;
+            int s=q.size();
+            for(int i=0;i<s;i++)
             {
-                TreeNode* node=q.front();
-                q.pop();
-                temp.push_back(node->val);
-                if(node->left!=nullptr)
-                    q.push(node->left);
-                if(node->right!=nullptr)
-                    q.push(node->right);
+                front=q.front(); q.pop();
+                if(front->left)
+                    q.push(front->left);
+                if(front->right)
+                    q.push(front->right);
+
+                    temp.push_back(front->val);
             }
-            res.push_back(temp);
-            temp.clear();
+            ans.push_back(temp);
         }
+        return ans;
     }
 };
